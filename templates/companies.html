@@ -1,0 +1,8 @@
+{% extends 'base.html' %}{% import '_ui.html' as ui with context %}{% block content %}
+{% call ui.heading('YOUR WORKSPACE','Companies','Places you could make an impact. Keep the details close.') %}<a class="button" href="#new-record">+ Add company</a>{% endcall %}
+<section class="panel records" data-records>{{ ui.toolbar('Companies', false) }}<div class="table-scroll"><table><thead><tr><th>Company</th><th>Industry</th><th>Location</th><th>Actions</th></tr></thead><tbody>
+{% for r in companies %}<tr data-record data-status="{{ r.status|default('') }}"><td><strong>{{ r.company_name }}</strong>{% if r.website %}<small class="cell-sub">{{ r.website }}</small>{% endif %}{% if r.notes %}<small class="cell-sub">{{ r.notes }}</small>{% endif %}</td><td>{{ r.industry or '—' }}</td><td>{{ [r.city,r.state]|select|join(', ') or '—' }}</td><td>{{ ui.actions('company',r.company_id) }}</td></tr>{% else %}<tr><td colspan="4"><div class="empty-state"><span>◎</span><h3>Room for new possibilities</h3><p>No companies yet. Add your first company below.</p></div></td></tr>{% endfor %}
+<tr data-no-results hidden><td colspan="4" class="empty-state">No records match your filters. Try another search.</td></tr>
+</tbody></table></div></section>
+<details class="panel add-panel" id="new-record" open><summary><span><span class="eyebrow">KEEP THINGS MOVING</span><strong>Add company</strong></span><span class="summary-toggle" aria-hidden="true">+</span></summary><form method="post" action="{{ url_for('add_company') }}" class="form-grid">{% set record = {} %}{% include '_company_fields.html' %}<div class="form-footer full"><span class="muted">* Required fields</span><button>Add company</button></div></form></details>
+{% endblock %}

@@ -1,0 +1,2 @@
+{% import '_ui.html' as ui with context %}
+{{ ui.field('company_name','Company name',record.company_name,required=true,maxlength=100) }}{{ ui.field('industry','Industry',record.industry,maxlength=50) }}{{ ui.field('website','Website',record.website,type='url',maxlength=200,placeholder='https://example.com') }}{{ ui.field('city','City',record.city,maxlength=50) }}{{ ui.field('state','State',record.state,maxlength=50) }}{{ ui.area('notes','Notes',record.notes) }}

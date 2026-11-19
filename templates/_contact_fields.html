@@ -1,0 +1,2 @@
+{% import '_ui.html' as ui with context %}
+{{ ui.field('contact_name','Contact name',record.contact_name,required=true,maxlength=100) }}{{ ui.company_select(companies,record.company_id,required=true) }}{{ ui.field('title','Job title',record.title,maxlength=100) }}{{ ui.field('email','Email',record.email,type='email',maxlength=100) }}{{ ui.field('phone','Phone',record.phone,type='tel',maxlength=20) }}{{ ui.field('linkedin_url','LinkedIn URL',record.linkedin_url,type='url',maxlength=200,placeholder='https://linkedin.com/in/…') }}{{ ui.area('notes','Notes',record.notes) }}

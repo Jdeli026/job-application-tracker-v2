@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Job Application Tracker{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script defer src="{{ url_for('static', filename='app.js') }}"></script></head>
+<body><a class="skip-link" href="#main">Skip to content</a>
+<aside class="sidebar"><a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-icon">jt<span>.</span></span><span>Job Tracker<small>YOUR NEXT CHAPTER</small></span></a>
+<div class="nav-label">WORKSPACE</div><nav aria-label="Main navigation">
+{% for endpoint, symbol, label in [('dashboard','◫','Overview'),('applications','▤','Applications'),('jobs','▣','Job board'),('companies','▦','Companies'),('contacts','◎','Contacts'),('job_match','✧','Job Match')] %}
+<a href="{{ url_for(endpoint) }}" {% if request.endpoint == endpoint or request.endpoint == {'companies':'edit_company','jobs':'edit_job','applications':'edit_application','contacts':'edit_contact'}.get(endpoint) or request.endpoint == {'companies':'detail_company','jobs':'detail_job','applications':'detail_application','contacts':'detail_contact'}.get(endpoint) %}class="active" aria-current="page"{% endif %}><span aria-hidden="true">{{ symbol }}</span>{{ label }}{% if endpoint == 'job_match' %}<small>SKILLS</small>{% endif %}</a>{% endfor %}
+</nav><div class="sidebar-note"><span class="eyebrow">ONE STEP AT A TIME</span><p>A little progress.<br>A new possibility.</p><a href="{{ url_for('job_match') }}">Explore your matches</a></div>
+<div class="sidebar-footer"><span class="avatar">JT</span><div>Your workspace<small>Job Application Tracker</small></div></div></aside>
+<div class="workspace"><header class="topbar"><span>Workspace <span class="crumb">/ {{ {'dashboard':'Overview','jobs':'Job board','job_match':'Job Match','detail_company':'Company details','detail_job':'Job details','detail_application':'Application details','detail_contact':'Contact details'}.get(request.endpoint, request.endpoint|replace('_',' ')|title) }}</span></span><span class="topbar-note">Make your next move count.</span></header>
+<main id="main" tabindex="-1">
+{% with messages = get_flashed_messages(with_categories=true) %}{% for category,message in messages %}<div class="flash {{ category }}" role="status">{{ message }}</div>{% endfor %}{% endwith %}
+{% block content %}{% endblock %}
+<footer class="page-footer">Built for your next opportunity.<span>Job Application Tracker · COP4751</span></footer>
+</main></div></body></html>

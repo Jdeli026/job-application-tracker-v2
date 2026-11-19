@@ -1,0 +1,3 @@
+{% extends 'base.html' %}{% import '_ui.html' as ui with context %}{% block content %}
+{% call ui.heading('MAKE AN UPDATE','Edit contact','Keep your workspace accurate and up to date.') %}<a class="button secondary" href="{{ url_for('contacts') }}">Cancel</a>{% endcall %}
+<section class="panel edit-panel"><form method="post" class="form-grid">{% set record = contact %}{% include '_contact_fields.html' %}<div class="form-footer full"><span class="muted">* Required fields</span><div class="actions"><a class="button secondary" href="{{ url_for('contacts') }}">Cancel</a><button>Save changes</button></div></div></form></section>{% endblock %}
