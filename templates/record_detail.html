@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% import '_ui.html' as ui with context %}
+{% block title %}{{ record[config.title] }} · Job Tracker{% endblock %}
+{% block content %}
+  {% call ui.heading(kind|capitalize ~ ' details', record[config.title], 'All saved information, in one place.') %}
+    <div class="actions">
+      <a class="button secondary" href="{{ url_for(config.table) }}">Back to {{ config.table }}</a>
+      <a class="button" href="{{ url_for('edit_' ~ kind, item_id=item_id) }}">Edit {{ kind }}</a>
+    </div>
+  {% endcall %}
+
+  <section class="panel" aria-label="{{ kind|capitalize }} record">
+    <div class="section-heading"><h2>Record information</h2><span class="tag">{{ kind|capitalize }} #{{ item_id }}</span></div>
+    <dl class="detail-grid">
+      {% for key, label, type in config.fields %}
+        {% set value = record[key] %}
+        <div class="detail-field {% if type == 'json' or key == 'notes' %}full{% endif %}">
+          <dt>{{ label }}</dt>
+          <dd>
+            {% if value is none or value == '' %}
+              <span class="muted">Not provided</span>
+            {% elif type == 'json' %}
+              <pre>{{ value|pretty_json }}</pre>
+            {% elif type == 'boolean' %}
+              {{ 'Yes' if value else 'No' }}
+            {% elif type == 'money' %}
+              ${{ '{:,}'.format(value) }}
+            {% elif type == 'status' %}
+              {{ ui.status(value) }}
+            {% elif type == 'company' %}
+              <a href="{{ url_for('detail_company', item_id=record.company_id) }}">{{ value }}</a>
+            {% elif type == 'job' %}
+              <a href="{{ url_for('detail_job', item_id=record.job_id) }}">{{ value }}</a>
+            {% elif type == 'url' and value|external_url %}
+              <a href="{{ value }}" target="_blank" rel="noopener noreferrer">{{ value }}</a>
+            {% else %}
+              {{ value }}
+            {% endif %}
+          </dd>
+        </div>
+      {% endfor %}
+    </dl>
+  </section>
+
+  {% for group in related %}
+    <section class="panel" aria-label="Related {{ group.label|lower }}">
+      <div class="section-heading"><h2>{{ group.label }}</h2><span class="tag">{{ group.rows|length }} linked</span></div>
+      <ul class="related-records">
+        {% for row in group.rows %}
+          <li>
+            <a href="{{ url_for('detail_' ~ group.kind, item_id=row[group.id]) }}">{{ row[group.name] }}</a>
+            {% if group.kind == 'application' %}{{ ui.status(row.status) }}{% endif %}
+          </li>
+        {% else %}
+          <li class="muted">No linked {{ group.label|lower }} yet.</li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endfor %}
+{% endblock %}
