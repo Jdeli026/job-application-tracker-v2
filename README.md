@@ -2,6 +2,11 @@
 
 COP4751 course project using Python/Flask, MySQL 8, Jinja HTML, CSS, and a small amount of browser JavaScript.
 
+## Recorded demonstration
+
+[Watch or download the demonstration video](demo.mp4) (**6 minutes 32 seconds**, approximately 8.8 MB).
+The actual MP4 file is included in this repository. See [VIDEO_GUIDE.md](VIDEO_GUIDE.md) for the recording's chapters.
+
 ## Redesigned workspace
 
 - Sidebar navigation and responsive mobile navigation
@@ -116,11 +121,11 @@ Use `.venv/bin/python -m unittest discover -v` on macOS/Linux. Tests use an isol
 - `static/style.css`, `static/app.js`: design, filters, parallax, confirmations
 - `tests/`: automated integration tests and isolated database test double
 - `docs/`: screenshots from the redesign preview
-- `AI_USAGE.md`: AI documentation still required before submission; intentionally withheld from this repository at the owner's request
+- `AI_USAGE.md`: supplied AI usage documentation
 - `SUBMISSION_CHECKLIST.md`, `VIDEO_GUIDE.md`, `TESTING.md`: grading and verification guidance
 
 ## Submission
 
-Push the contents of this folder to your GitHub repository. Include all required files and **the actual 3-7 minute recorded video file**; a script or video link alone does not meet the stated requirement. Follow [VIDEO_GUIDE.md](VIDEO_GUIDE.md), verify the video is present and playable on GitHub, and submit your repository URL.
+The source code, setup instructions, schema, AI usage documentation, and actual recorded video file (`demo.mp4`, 6:32) are included. Submit the repository URL: [Jdeli026/job-application-tracker-v2](https://github.com/Jdeli026/job-application-tracker-v2).
 
-This version was reviewed against the supplied Project Specification and uses the owner-supplied replacement schema.sql. Live MySQL verification and the recorded video are still required. Complete and add AI_USAGE.md before submission. No grade is guaranteed.
+This version was reviewed against the supplied Project Specification and uses the owner-supplied replacement schema.sql. The recorded demonstration shows the Flask application working with MySQL, CRUD operations, SQL query results, and skill matching. Automated tests additionally cover all four detail pages and schema-related behavior using a test double. A separate fresh-clone setup against MySQL has not been independently verified.
